@@ -24,7 +24,7 @@ class Blog extends React.Component<BlogProps, {}> {
         {this.props.after}
         {this.props.before}
       </div>
-    )
+    );
   }
 }
 
