@@ -7,6 +7,7 @@ import { ApolloClient } from "apollo-client";
 import { createHttpLink } from "apollo-link-http";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { InMemoryCache } from "apollo-boost";
+import Signin from "./Signin";
 
 const link = createHttpLink({
   uri: "http://localhost:4000/graphql",
@@ -27,6 +28,7 @@ export default class Routes extends Component {
           <Switch>
             <Route exact={true} path="/" component={Root} />
             <Route path="/post" component={Post} />
+            <Route path="/signin" component={Signin} />
           </Switch>
         </div>
       </ApolloProvider>

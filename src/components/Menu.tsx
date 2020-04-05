@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   fade,
   makeStyles,
@@ -111,18 +111,6 @@ interface UserResult {
   };
 }
 
-const CreateNavBar = () => {
-  const { loading, data, refetch } = useQuery<UserResult>(UserInfo);
-  if (loading) return <p>Loading...</p>;
-
-  console.log("---------------");
-  if (data !== undefined) {
-    console.log(data.me);
-  }
-
-  return <div>This is CreateNavBar</div>;
-};
-
 function BlogAppBar({ history }: RouteComponentProps) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -132,6 +120,7 @@ function BlogAppBar({ history }: RouteComponentProps) {
   ] = React.useState<null | HTMLElement>(null);
 
   const { loading, data, refetch } = useQuery<UserResult>(UserInfo);
+  const [signedin, setSigninState] = useState(false);
 
   console.log("---------------");
   const isMenuOpen = Boolean(anchorEl);
@@ -216,7 +205,15 @@ function BlogAppBar({ history }: RouteComponentProps) {
       pathname: "/post",
     });
   };
-  if (data !== undefined) {
+
+  const moveToSignin = () => {
+    // history.push({
+    //   pathname: "/signin",
+    // });
+    setSigninState(true);
+  };
+
+  if (signedin === false) {
     return (
       <div className={classes.grow}>
         <AppBar position="static">
@@ -259,6 +256,7 @@ function BlogAppBar({ history }: RouteComponentProps) {
               <IconButton
                 aria-label="show 17 new notifications"
                 color="inherit"
+                onClick={moveToSignin}
               >
                 <Badge badgeContent={17} color="secondary">
                   <NotificationsIcon />
@@ -297,7 +295,6 @@ function BlogAppBar({ history }: RouteComponentProps) {
   return (
     <div className={classes.grow}>
       <AppBar position="static">
-        <CreateNavBar />
         <Toolbar>
           <IconButton
             edge="start"
