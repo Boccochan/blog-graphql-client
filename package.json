@@ -5,6 +5,7 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "@material-ui/core": "^4.9.8",
+    "@material-ui/icons": "^4.9.1",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -12,13 +13,18 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-router": "^5.1.5",
+    "@types/react-router-dom": "^5.1.3",
     "apollo-boost": "^0.4.7",
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
     "graphql": "^14.6.0",
+    "history": "^4.10.1",
     "react": "^16.13.1",
     "react-apollo": "^3.1.3",
     "react-dom": "^16.13.1",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "typescript": "~3.7.2"
   },
@@ -30,16 +36,9 @@
     "tslint:prettier-check": "tslint-config-prettier-check ./tslint.json",
     "tslint": "tslint --fix --force --format stylish --project ./tsconfig.json ./{src,__tests__}/**/*.{ts,tsx}",
     "prettier": "prettier --write ./{src,__tests__}/**/*.{ts,tsx}"
-
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "prettier": {
-    "semi": true,
-    "singleQuote": true,
-    "printWidth": 120,
-    "trailingComma": "es5"
   },
   "browserslist": {
     "production": [
