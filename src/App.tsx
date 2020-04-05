@@ -15,6 +15,7 @@ const ME_INFO = gql`
     }
   }
 `;
+
 interface LoginInput {
   email: String;
   password: String;

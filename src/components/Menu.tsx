@@ -22,6 +22,9 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 // import { Link, withRouter } from "react-router-dom";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     grow: {
@@ -88,7 +91,39 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function PrimarySearchAppBar({ history }: RouteComponentProps) {
+const UserInfo = gql`
+  {
+    me {
+      id
+      userName
+    }
+  }
+`;
+
+interface UserResult {
+  me: {
+    id: String;
+    userName: String;
+    email: String;
+    site: String;
+    createdAt: String;
+    updateAt: String;
+  };
+}
+
+const CreateNavBar = () => {
+  const { loading, data, refetch } = useQuery<UserResult>(UserInfo);
+  if (loading) return <p>Loading...</p>;
+
+  console.log("---------------");
+  if (data !== undefined) {
+    console.log(data.me);
+  }
+
+  return <div>This is CreateNavBar</div>;
+};
+
+function BlogAppBar({ history }: RouteComponentProps) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [
@@ -96,6 +131,9 @@ function PrimarySearchAppBar({ history }: RouteComponentProps) {
     setMobileMoreAnchorEl,
   ] = React.useState<null | HTMLElement>(null);
 
+  const { loading, data, refetch } = useQuery<UserResult>(UserInfo);
+
+  console.log("---------------");
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -178,10 +216,88 @@ function PrimarySearchAppBar({ history }: RouteComponentProps) {
       pathname: "/post",
     });
   };
+  if (data !== undefined) {
+    return (
+      <div className={classes.grow}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography className={classes.title} variant="h6" noWrap>
+              Material-UI
+            </Typography>
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ "aria-label": "search" }}
+              />
+            </div>
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              {/* <IconButton
+              aria-label="show 4 new mails"
+              color="inherit"
+              onClick={handleClick}
+            >
+              <Badge badgeContent={4} color="secondary">
+                <MailIcon />
+              </Badge>
+            </IconButton> */}
+              <IconButton
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <Badge badgeContent={17} color="secondary">
+                  <NotificationsIcon />
+                </Badge>
+              </IconButton>
+              <IconButton
+                edge="end"
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+        </AppBar>
+        {renderMobileMenu}
+        {renderMenu}
+      </div>
+    );
+  }
 
   return (
     <div className={classes.grow}>
       <AppBar position="static">
+        <CreateNavBar />
         <Toolbar>
           <IconButton
             edge="start"
@@ -253,4 +369,4 @@ function PrimarySearchAppBar({ history }: RouteComponentProps) {
   );
 }
 
-export default withRouter(PrimarySearchAppBar);
+export default withRouter(BlogAppBar);

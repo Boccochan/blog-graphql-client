@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
-import PrimarySearchAppBar from "./components/Menu";
+// import App from "./App";
+// import PrimarySearchAppBar from "./components/Menu";
 import * as serviceWorker from "./serviceWorker";
 import Routes from "./components/Router";
 // import { Router } from "react-router";
